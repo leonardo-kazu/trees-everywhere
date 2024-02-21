@@ -1,0 +1,42 @@
+repos:
+  # Hooks from pre-commit oficial repo
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: no-commit-to-branch
+        args: [--branch, dev, --branch, release]
+  # Hook for commitizen
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.15.0
+    hooks:
+      - id: commitizen
+      - id: commitizen-branch
+        stages: [push]
+  # Hook for black
+  - repo: https://github.com/psf/black
+    rev: 24.2.0
+    hooks:
+      - id: black
+  # Hook for isort
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+  # Hook for flake8
+  - repo: 'https://github.com/PyCQA/flake8'
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        args: [--max-line-length=100, '--extend-ignore=E203,E704']
+  # Hook to sync with poetry
+  - repo: https://github.com/floatingpurr/sync_with_poetry
+    rev: 1.1.0
+    hooks:
+      - id: sync_with_poetry
+# Used so that the pre-commit bot can commit changes to the repository
+ci:
+  autofix_commit_msg: 'ci(pre-commit.ci) auto fixes from pre-commit hooks \n\nfor more information, see https://pre-commit.ci '
+  autoupdate_commit_msg: 'ci(pre-commit.ci): pre-commit autoupdate'

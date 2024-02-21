@@ -1,0 +1,19 @@
+{
+  "recommendations": [
+    "aaron-bond.better-comments",
+    "ms-python.black-formatter",
+    "naumovs.color-highlight",
+    "ms-azuretools.vscode-docker",
+    "bierner.color-info",
+    "ms-python.flake8",
+    "ms-python.isort",
+    "yzhang.markdown-all-in-one",
+    "DavidAnson.vscode-markdownlint",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+    "redhat.vscode-yaml",
+    "shardulm94.trailing-spaces",
+    "wayou.vscode-todo-highlight"
+  ]
+}

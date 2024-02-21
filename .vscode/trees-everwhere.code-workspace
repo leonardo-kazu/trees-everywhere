@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "name": "🌳trees-everywhere-project",
+      "path": ".."
+    },
+    {
+      "name": "🌲trees",
+      "path": "../trees"
+    },
+    {
+      "name": "📖docs",
+      "path": "../docs"
+    }
+  ],
+  "settings": {
+    "[markdown]": {
+      "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "[python]": {
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "editor.rulers": [100],
+    "flake8.args": ["--max-line-length=100", "--extend-ignore=E203,E704"],
+    "codestats.apikey": "SFMyNTY.YkdWdmJtRnlaRzh0YTJGNmRRPT0jI01UazRNREE9.0BFJD7jexg8y18f1LOnHKWl66WVRBKxos08sDpQkm84"
+  }
+}

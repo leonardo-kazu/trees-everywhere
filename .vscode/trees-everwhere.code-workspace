@@ -24,7 +24,19 @@
     "python.analysis.autoImportCompletions": true,
     "editor.rulers": [100],
     "flake8.args": ["--max-line-length=100", "--extend-ignore=E203,E704"],
-    "prettier.endOfLine": "lf"
+    "prettier.endOfLine": "lf",
+    "sqltools.connections": [
+      {
+        "previewLimit": 50,
+        "server": "localhost",
+        "port": 5432,
+        "askForPassword": true,
+        "driver": "PostgreSQL",
+        "name": "djangoPSQL",
+        "database": "djangodb",
+        "username": "djangouser"
+      }
+    ]
     // The api key for the Code::Stats extension was used to track my coding activity, but it should have not been commited to the repository.
     // It is now deprecated and have been removed from the settings.
   }

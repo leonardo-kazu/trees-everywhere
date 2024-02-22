@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User as AuthUser
 from django.db import models
+from django.contrib.auth.models import User as BaseUser
 
 
 # Create your models here.
@@ -12,11 +12,13 @@ class Account(models.Model):
     Attributes:
     ===========
         name (str): The name of the account.
+        users (User): The users of the account.
         created_at (datetime): The date and time the account was created.
         active (bool): A flag indicating whether the account is active.
     """
 
     name = models.CharField()
+    users = models.ManyToManyField("User", blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
 
@@ -45,7 +47,7 @@ class Profile(models.Model):
         return self.about
 
 
-class User(AuthUser):
+class User(models.Model):
     """
     User model.
 
@@ -53,34 +55,18 @@ class User(AuthUser):
 
     Attributes:
     ===========
+        user (BaseUser): The base user.
+        accounts (Account): The accounts of the user.
         profile (Profile): The profile of the user.
     """
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.OneToOneField(BaseUser, on_delete=models.CASCADE, primary_key=True)
+    accounts = models.ManyToManyField("Account", blank=True)
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
 
     def __str__(self):
         """Return the username of the user."""
-        return self.username
-
-
-class AccountUser(models.Model):
-    """
-    AccountUser model.
-
-    Represents the relationship between an account and an user.
-
-    Attributes:
-    ===========
-        account (Account): The account.
-        user (User): The user.
-    """
-
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        """Return the name of the account and the username of the user."""
-        return f"{self.account.name} - {self.user.username}"
+        return self.user.username
 
 
 class Tree(models.Model):
@@ -130,4 +116,4 @@ class PlantedTree(models.Model):
 
     def __str__(self):
         """Return the name of the tree and the username of the user who planted it."""
-        return f"{self.tree.name} - {self.planted_by.username}"
+        return f"{self.tree.name} - {self.planted_by.user.username}"

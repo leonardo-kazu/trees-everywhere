@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class TreesEverywhereConfig(AppConfig):
+class TreesConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "trees_everywhere"
+    name = "trees"

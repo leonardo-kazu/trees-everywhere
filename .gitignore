@@ -1,3 +1,4 @@
 description.pdf
 **/__pycache__/
 **/*.dbml
+**/*.env

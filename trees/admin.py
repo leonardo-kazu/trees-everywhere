@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 
-from .models import Account, Profile, Tree, User, PlantedTree
+from .models import Account, PlantedTree, Profile, Tree, User
 
 
 class UserAdmin(admin.ModelAdmin):

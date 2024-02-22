@@ -22,6 +22,19 @@ The project was made using Python 3.12 and Poetry. To install the project with a
 poetry install
 ```
 
+Before running the project, you need to create a `.env` file in the root of the project with the following content:
+
+```env
+# Database
+DB_NAME=your_database_name
+DB_USER=your_database_user
+DB_PASSWORD=your_database_password
+DB_HOST=your_database_host
+DB_PORT=your_database_port
+```
+
+> Using a `.env` file will only work in a development environment. In a production environment, you must use environment variables.
+
 To run the project, you can use the following command:
 
 <!-- TODO: ADD INFORMATION REGARDING ENVRIOMENT VARIABLES AND DATABASE BEFORE RUNNING THE PROJECT -->

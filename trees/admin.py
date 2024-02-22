@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
+from django.utils.safestring import mark_safe
 
 from .models import Account, PlantedTree, Profile, Tree, User
 
@@ -38,13 +39,21 @@ class TreeAdmin(admin.ModelAdmin):
         # Create an HTML list representation of these objects
         list_items = "".join(
             [
-                f'<li>{pt} - <a href="'
-                + f'{reverse("admin:appname_user_change", args=(pt.planted_by.pk,))}{pt.planted_by}'
-                + "</a></li>"
+                format_html(
+                    "<li>Account: <a href='{}'>{}</a> - User: <a href='{}'>{}</a></li>",
+                    reverse("admin:trees_account_change", args=(pt.account.pk,)),
+                    pt.account.name,
+                    reverse("admin:trees_user_change", args=(pt.planted_by.pk,)),
+                    pt.planted_by,
+                )
                 for pt in planted_trees
+                # f'<li>{pt} - <a href="'
+                # + f'{reverse("admin:trees_user_change", args=(pt.planted_by.pk,))}'
+                # + f"</a>{pt.planted_by}</li>"
+                # for pt in planted_trees
             ]
         )
-        return format_html("<ul>{}</ul>", list_items)
+        return mark_safe(f"<ul>{list_items}</ul>")
 
     planted_trees_objects.allow_tags = True
     planted_trees_objects.short_description = "Planted Trees"

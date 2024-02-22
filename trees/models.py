@@ -1,3 +1,6 @@
+from datetime import datetime
+from decimal import Decimal
+
 from django.contrib.auth.models import User as BaseUser
 from django.db import models
 
@@ -47,28 +50,6 @@ class Profile(models.Model):
         return self.about
 
 
-class User(models.Model):
-    """
-    User model.
-
-    Represents an user of the system. Extends the base Django Auth User Model.
-
-    Attributes:
-    ===========
-        user (BaseUser): The base user.
-        accounts (Account): The accounts of the user.
-        profile (Profile): The profile of the user.
-    """
-
-    user = models.OneToOneField(BaseUser, on_delete=models.CASCADE, primary_key=True)
-    accounts = models.ManyToManyField("Account", blank=True)
-    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
-
-    def __str__(self):
-        """Return the username of the user."""
-        return self.user.username
-
-
 class Tree(models.Model):
     """
     Tree model.
@@ -91,6 +72,69 @@ class Tree(models.Model):
         return self.name
 
 
+class User(models.Model):
+    """
+    User model.
+
+    Represents an user of the system. Extends the base Django Auth User Model.
+
+    Attributes:
+    ===========
+        user (BaseUser): The base user.
+        accounts (Account): The accounts of the user.
+        profile (Profile): The profile of the user.
+    """
+
+    user = models.OneToOneField(BaseUser, on_delete=models.CASCADE, primary_key=True)
+    accounts = models.ManyToManyField("Account", blank=True)
+    profile = models.OneToOneField(Profile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """Return the username of the user."""
+        return self.user.username
+
+    def plant_tree(
+        self, tree: Tree, location: tuple[Decimal, Decimal], account: Account.pk
+    ):
+        """
+        Plant a tree.
+
+        Args:
+        =====
+            tree (Tree): The tree to be planted.
+            location (tuple[Decimal, Decimal]): The latitude and longitude of the location where the
+            tree will be planted.
+            account (Account.pk): The account where the tree will be planted.
+        """
+        planted_tree = PlantedTree(
+            tree=tree,
+            planted_by=self,
+            account=account,
+            latitude=location[0],
+            longitude=location[1],
+        )
+
+        if account not in self.accounts.all():
+            raise ValueError("The user is not part of the account")
+
+        planted_tree.save()
+
+    def plant_trees(
+        self, plants: list[tuple[Tree, tuple[Decimal, Decimal]]], account: Account.pk
+    ):
+        """
+        Plant multiple trees.
+
+        Args:
+        =====
+            plants (list[tuple[Tree, tuple[Decimal, Decimal]]]): A list of tuples containing the
+            tree and the location where it will be planted.
+            account (Account.pk): The account where the trees will be planted.
+        """
+        for tree, location in plants:
+            self.plant_tree(tree, location, account)
+
+
 class PlantedTree(models.Model):
     """
     PlantedTree model.
@@ -101,18 +145,22 @@ class PlantedTree(models.Model):
     ===========
         planted_by (User): The user who planted the tree.
         tree (Tree): The tree.
-        age (int): The age of the tree in years.
         planted_at (datetime): The date and time the tree was planted.
         latitude (Decimal): The latitude of the location where the tree was planted.
         longitude (Decimal): The longitude of the location where the tree was planted.
     """
 
     tree = models.ForeignKey(Tree, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
     planted_at = models.DateTimeField(auto_now_add=True)
     planted_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    age = models.IntegerField()
     latitude = models.DecimalField(max_digits=9, decimal_places=6)
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
+
+    @property
+    def age(self):
+        """Return the age of the tree in years."""
+        return datetime.now().year - self.planted_at.year
 
     def __str__(self):
         """Return the name of the tree and the username of the user who planted it."""

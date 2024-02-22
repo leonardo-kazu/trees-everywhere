@@ -1,0 +1,19 @@
+{% extends "trees/base.html" %} {%block title%} {{object.name}} {%endblock%} {%block content%}
+
+<div class="container">
+  <div class="column is-one-third">
+    <div class="card">
+      <div class="card-content">
+        <p class="title">{{ object.tree.name }}</p>
+        <p class="subtitle">{{ object.planted_at }}</p>
+        <p>Scientific Name: {{ object.tree.scientific_name }}</p>
+        <p>Age: {{ object.age }}</p>
+        <p>Latitude: {{ object.latitude }}</p>
+        <p>Longitude: {{ object.longitude }}</p>
+        <a href="{% url 'home' %}" class="button is-primary">Return to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{%endblock content%}

@@ -10,6 +10,7 @@ python = "^3.12"
 django = "^5.0.2"
 psycopg = {extras = ["binary"], version = "^3.1.18"}
 
+
 [tool.poetry.group.dev]
 optional = true
 
@@ -19,6 +20,8 @@ black = "^24.2.0"
 pre-commit = "^3.6.2"
 commitizen = "^3.15.0"
 python-dotenv = "^1.0.1"
+factory-boy = "^3.3.0"
+faker = "^23.2.1"
 
 
 

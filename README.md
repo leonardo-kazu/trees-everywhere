@@ -5,6 +5,7 @@
   - [Installation](#installation)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
+  - [Future Features](#future-features)
 
 ## Description
 
@@ -60,3 +61,9 @@ There, every analysis and thought process can be found. Aswell as any other docu
 If you want to contribute to the project, you can follow the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
 
 There, you can find the guidelines for contributing to the project.
+
+## Future Features
+
+One feature I realy want to implement is the ability to see trees in a map. This way, the user can see where the trees are and how many trees are in a specific location.
+
+Probably using the google maps API.

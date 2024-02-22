@@ -1,0 +1,40 @@
+{% extends "trees/base.html" %} {%block title%} Trees Everywhere {%endblock%} {%block content%}
+<div class="container">
+  <form method="post">
+    {% csrf_token %}
+    <div class="field">
+      <label class="label" for="{{ form.tree.id_for_label }}">Tree</label>
+      <div class="control">{{ form.tree }}</div>
+    </div>
+    <div class="field">
+      <label class="label" for="{{ form.account.id_for_label }}">Tree</label>
+      <div class="control">{{ form.account }}</div>
+    </div>
+    <div class="field">
+      <label class="label" for="{{ form.latitude.id_for_label }}">Latitude</label>
+      <div class="control">{{ form.latitude }}</div>
+    </div>
+    <div class="field">
+      <label class="label" for="{{ form.longitude.id_for_label }}">Longitude</label>
+      <div class="control">{{ form.longitude }}</div>
+    </div>
+    <div class="field">
+      <div class="control">
+        <button type="submit" class="button is-primary">Plant Tree</button>
+      </div>
+    </div>
+  </form>
+  {% if form.errors %}
+  <div class="notification is-danger">
+    <button
+      id="notification"
+      class="delete"
+      onclick="document.querySelector('#notification').style.display = 'none'"></button>
+    {% for field in form %} {% for error in field.errors %}
+    <p>{{ error }}</p>
+    {% endfor %} {% endfor %}
+  </div>
+  {% endif %}
+</div>
+
+{% endblock content %}
